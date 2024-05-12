@@ -3,7 +3,7 @@
     <div class="mt-24 grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 gap-8">
         <div v-for="post in posts" :key="post.id">
             <RouterLink :to="'/post/' + post.id " class="group">
-                <img :src="'storage/' + post.picture" class="w-[100%] lg:h-72 md:h-64 sm:h-80 object-cover shadow-lg rounded-sm group-hover:shadow-xl ease-in-out duration-300">
+                <img :src="'/storage/' + post.picture" class="w-[100%] lg:h-72 md:h-64 sm:h-80 object-cover shadow-lg rounded-sm group-hover:shadow-xl ease-in-out duration-300">
                 <div class="py-6">
                     <div class="text-sm text-indigo-700 font-semibold">{{ post.category }}</div>
                     <div class="font-black mt-1 mb-2 text-3xl text-slate-800 leading-tight group-hover:text-indigo-500 ease-in-out duration-300">{{ post.title }}</div>
