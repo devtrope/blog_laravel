@@ -2,6 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\PostsController;
 
-Route::apiResource('home', HomeController::class);
+Route::apiResource('posts', PostsController::class);
