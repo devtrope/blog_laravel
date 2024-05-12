@@ -12,4 +12,9 @@ class PostsController extends Controller
     {
         return response()->json(['posts' => Post::all()]);
     }
+
+    public function show(string $id) 
+    {
+        return response()->json(['post' => Post::find($id)]);
+    }
 }
