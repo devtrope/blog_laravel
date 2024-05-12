@@ -3,14 +3,14 @@ import { createApp } from 'vue'
 import { createWebHistory, createRouter } from 'vue-router'
 
 import HomeView from './Pages/HomeView.vue'
-import AboutView from './Pages/AboutView.vue'
+import AdministrationView from './Pages/AdministrationView.vue'
 import App from './Pages/App.vue'
 import NotFoundView from './Pages/NotFoundView.vue';
 import PostView from './Pages/PostView.vue';
 
 const routes = [
     { path: '/', component: HomeView },
-    { path: '/about', component: AboutView },
+    { path: '/administration', component: AdministrationView },
     { path: '/post/:id', component: PostView },
     { path: '/:pathMatch(.*)', component: NotFoundView },
 ]
