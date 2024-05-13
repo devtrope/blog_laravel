@@ -5,16 +5,57 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
+    
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index() 
     {
         return response()->json(['posts' => Post::all()]);
     }
-
+    
+    /**
+     * show
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function show(string $id) 
     {
         return response()->json(['post' => Post::find($id)]);
+    }
+    
+    /**
+     * update
+     *
+     * @param  mixed $id
+     * @param  mixed $request
+     * @return void
+     */
+    public function update(string $id, PostRequest $request) 
+    {
+        $post = Post::find($id);
+        $datas = $request->validated();
+
+        $content = $request->validated('content');
+        $datas['content'] = nl2br($content);
+
+        $image = $request->validated('picture');
+        $datas['picture'] = ($image !== null) ? $image->store('posts', 'public') : $post->picture;
+
+        //Suppression de l'ancienne image
+        if ($image !== null)
+            Storage::disk('public')->delete($post->picture);
+
+        $post->update($datas);
+
+        return response()->json(['success' => true]);
     }
 }

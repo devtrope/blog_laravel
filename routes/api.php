@@ -6,4 +6,3 @@ use App\Http\Controllers\Api\PostsController;
 use App\Http\Controllers\Api\AdminController;
 
 Route::apiResource('posts', PostsController::class);
-Route::apiResource('admin', AdminController::class);

@@ -22,8 +22,12 @@
 
     const posts = ref()
 
-    //Fonction permettant de supprimer les sauts de ligne d'un texte donné
-    //et de le raccourcir s'il est plus long que 150 caractères
+    /**
+     * Fonction permettant de supprimer les sauts de ligne d'un texte donné
+     * et de le raccourcir s'il est plus long que 150 caractères
+     * @param {any} string
+     * @returns {any}
+     */
     function formatted_content(string) {
         string = string.replace(/<\/?[^>]+>/ig, "")
         if (string.length > 150)

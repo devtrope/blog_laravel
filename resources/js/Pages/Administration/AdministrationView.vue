@@ -1,4 +1,5 @@
 <template>
+    <div class="w-full bg-emerald-500 text-white mb-4 p-4 rounded-md text-sm" v-if="success" v-text="success"></div>
     <div class="lg:flex sm:block items-center justify-between">
         <h1 class="text-lg font-bold text-slate-800">Administration</h1>
     </div>
@@ -20,7 +21,7 @@
                     <td class="border-b border-solid border-slate-200 bg-white p-3">{{ post.title }}</td>
                     <td class="border-b border-solid border-slate-200 bg-white p-3 text-indigo-700 font-semibold">{{ post.category }}</td>
                     <td class="border-b border-solid border-slate-200 bg-white p-3">
-                        
+                        <RouterLink :to="'/admin/post/edit/' + post.id">Modifier</RouterLink>
                     </td>
                 </tr>
             </tbody>
@@ -29,13 +30,23 @@
 </template>
 
 <script setup>
+    import { RouterLink } from 'vue-router'
+    import { useStore } from 'vuex'
     import { ref, onMounted } from 'vue'
 
+    const store = useStore()
     const posts = ref()
+    const success = ref()
 
     onMounted(() => {
-        axios.get('/api/admin/')
+        axios.get('/api/posts/')
         .then(response => response.data)
         .then(data => posts.value = data.posts)
+
+        if (store.state.success)
+        {
+            success.value = store.state.success
+            store.commit('successMessage', null)
+        }
     })
 </script>
