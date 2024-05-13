@@ -2,6 +2,7 @@
     <div class="w-full bg-emerald-500 text-white mb-4 p-4 rounded-md text-sm" v-if="success" v-text="success"></div>
     <div class="lg:flex sm:block items-center justify-between">
         <h1 class="text-lg font-bold text-slate-800">Administration</h1>
+        <RouterLink to="/admin/post/create">Nouvel article</RouterLink>
     </div>
     <div class="bg-slate-50 py-8 mt-16 rounded-xl border border-solid border-slate-200">
         <table class="table-auto border-collapse w-full text-sm">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use App\Http\Requests\PostEditRequest;
 use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
@@ -19,6 +20,27 @@ class PostsController extends Controller
     public function index() 
     {
         return response()->json(['posts' => Post::all()]);
+    }
+    
+    /**
+     * store
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function store(PostRequest $request) 
+    {
+        $datas = $request->validated();
+
+        $content = $request->validated('content');
+        $datas['content'] = nl2br($content);
+
+        $image = $request->validated('picture');
+        $datas['picture'] = $image->store('posts', 'public');
+
+        Post::create($datas);
+
+        return response()->json(['success' => true]);
     }
     
     /**
@@ -39,7 +61,7 @@ class PostsController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function update(string $id, PostRequest $request) 
+    public function update(string $id, PostEditRequest $request) 
     {
         $post = Post::find($id);
         $datas = $request->validated();

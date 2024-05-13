@@ -7,6 +7,7 @@ import App from './App.vue'
 import HomeView from './Pages/HomeView.vue'
 import AdministrationView from './Pages/Administration/AdministrationView.vue'
 import PostEditView from './Pages/Administration/PostEditView.vue';
+import PostAddView from './Pages/Administration/PostAddView.vue';
 import NotFoundView from './Pages/NotFoundView.vue';
 import PostView from './Pages/PostView.vue';
 
@@ -14,6 +15,7 @@ const routes = [
     { path: '/', component: HomeView },
     { path: '/admin', component: AdministrationView },
     { path: '/admin/post/edit/:id', component: PostEditView },
+    { path: '/admin/post/create', component: PostAddView },
     { path: '/post/:id', component: PostView },
     { path: '/:pathMatch(.*)', component: NotFoundView },
 ]

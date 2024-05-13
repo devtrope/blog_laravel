@@ -5,26 +5,24 @@
             <div class="flex flex-col gap-8">
                 <div>
                     <label class="font-semibold text-sm block mb-2 text-slate-700">Titre</label>
-                    <input type="text" id="title" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-md focus-visible:outline-none focus-visible:border-indigo-400" v-model="post.title" />
+                    <input type="text" id="title" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-md focus-visible:outline-none focus-visible:border-indigo-400" v-model="form.title" />
                     <p class="text-sm text-red-500" v-if="errors.title" v-text="errors.title[0]"></p>
                 </div>
                 <div>
                     <label class="font-semibold text-sm block mb-2 text-slate-700">Catégorie</label>
-                    <input type="text" id="title" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-md focus-visible:outline-none focus-visible:border-indigo-400" v-model="post.category" />
+                    <input type="text" id="title" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-md focus-visible:outline-none focus-visible:border-indigo-400" v-model="form.category" />
                     <p class="text-sm text-red-500" v-if="errors.category" v-text="errors.category[0]"></p>
                 </div>
             </div>
             <div>
                 <label class="font-semibold text-sm block mb-2 text-slate-700">Image d'illustration</label>
-                <p class="text-xs mb-2 text-slate-700">Cliquez sur l'image pour la modifier</p>
-                <img id="preview" :src="'/storage/' + post.picture" class="w-[100%] aspect-video object-cover cursor-pointer border border-solid border-slate-200" @click="() => handlePicture()">
-                <input type="file" id="picture" class="hidden" @change="e => uploadFile(e.target.files[0])" accept="image/*" />
+                <input type="file" id="picture" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-sm" @change="e => uploadFile(e.target.files[0])" accept="image/*" />
                 <p class="text-sm text-red-500" v-if="errors.picture" v-text="errors.picture[0]"></p>
             </div>
         </div>
         <div class="mt-8">
             <label class="font-semibold text-sm block mb-2 text-slate-700">Contenu de l'article</label>
-            <div v-html="post.content" id="content" contentEditable="true" 
+            <div v-html="form.content" id="content" contentEditable="true" 
             class="border-slate-200 border-solid border w-full py-2 px-3 rounded h-[500px] overflow-y-scroll text-md focus-visible:outline-none 
             focus-visible:border-indigo-400"></div>
             <p class="text-sm text-red-500" v-if="errors.content" v-text="errors.content[0]"></p>
@@ -34,34 +32,29 @@
 </template>
 
 <script setup>
-    import { useRoute, useRouter } from 'vue-router'
+    import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
-    import { ref, onMounted } from 'vue'
+    import { ref, reactive } from 'vue'
 
-    const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const post = ref({})
     const image = ref()
     const errors = ref({})
 
     /**
-     * Trigger le champ de type file
-     * @returns {any}
-     */
-    function handlePicture() {
-        picture.click()
-    }
-
-    /**
-     * Permet de télécharger une image tout en la prévisualisant
+     * Permet de télécharger une image
      * @param {any} file
      * @returns {any}
      */
     function uploadFile(file) {
         image.value = file
-        preview.src = URL.createObjectURL(file)
     }
+
+    const form = reactive(({
+        title: '',
+        category: '',
+        content: ''
+    }))
 
     /**
      * Envoi du formulaire
@@ -69,14 +62,13 @@
      */
     function submit() {
         let formData = new FormData()
-        formData.append('_method', 'put')
-        formData.append('title', post.value.title)
-        formData.append('category', post.value.category)
+        formData.append('title', form.title)
+        formData.append('category', form.category)
         formData.append('content', content.innerText)
         if (image.value)
             formData.append('picture', image.value)
 
-        axios.post('/api/posts/' + route.params.id, formData, {
+        axios.post('/api/posts', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -85,7 +77,7 @@
         .then(data => {
             if (data.success)
             {
-                store.commit('successMessage', "L'article a bien été mis à jour")
+                store.commit('successMessage', "L'article a bien été ajouté")
                 router.push('/admin')
             }
         })
@@ -94,10 +86,4 @@
             errors.value = error.response.data.errors
         })
     }
-
-    onMounted(() => {
-        axios.get('/api/posts/' + route.params.id)
-        .then(response => response.data)
-        .then(data => post.value = data.post)
-    })
 </script>
