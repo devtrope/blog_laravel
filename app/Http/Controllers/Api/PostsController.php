@@ -80,4 +80,17 @@ class PostsController extends Controller
 
         return response()->json(['success' => true]);
     }
+    
+    /**
+     * destroy
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function destroy(string $id)
+    {
+        $post = Post::find($id);
+        Storage::disk('public')->delete($post->picture);
+        $post->delete();
+    }
 }

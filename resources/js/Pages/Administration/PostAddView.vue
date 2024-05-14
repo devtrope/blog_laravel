@@ -1,5 +1,5 @@
 <template>
-    <h1 class="text-2xl font-bold text-slate-700">Modification d'un article</h1>
+    <h1 class="text-2xl font-bold text-slate-700">Nouvel article</h1>
     <form class="mt-16" @submit.prevent="submit" enctype="multipart/form-data">
         <div class="grid grid-cols-2 gap-8">
             <div class="flex flex-col gap-8">
@@ -27,7 +27,7 @@
             focus-visible:border-indigo-400"></div>
             <p class="text-sm text-red-500" v-if="errors.content" v-text="errors.content[0]"></p>
         </div>
-        <button class="bg-green-500 hover:bg-green-600 shadow-md hover:shadow-sm text-sm font-semibold text-white py-3 rounded-md w-fit px-8 ease-in-out duration-300 mt-8">Enregistrer les modifications</button>
+        <button class="bg-green-500 hover:bg-green-600 shadow-md hover:shadow-sm text-sm font-semibold text-white py-3 rounded-md w-fit px-8 ease-in-out duration-300 mt-8">Ajouter l'article</button>
     </form>
 </template>
 

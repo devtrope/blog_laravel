@@ -21,8 +21,11 @@
                     <td class="border-b border-solid border-slate-200 bg-white p-3"><img :src="'/storage/' + post.picture" class="w-[100px] aspect-video rounded-sm object-cover"></td>
                     <td class="border-b border-solid border-slate-200 bg-white p-3">{{ post.title }}</td>
                     <td class="border-b border-solid border-slate-200 bg-white p-3 text-indigo-700 font-semibold">{{ post.category }}</td>
-                    <td class="border-b border-solid border-slate-200 bg-white p-3">
-                        <RouterLink :to="'/admin/post/edit/' + post.id">Modifier</RouterLink>
+                    <td class="border-b border-solid border-slate-200 bg-white p-3 flex flex-col gap-2">
+                        <RouterLink :to="'/admin/post/edit/' + post.id" class="bg-indigo-700 flex justify-center items-center p-2 text-white text-xs rounded-sm">Modifier</RouterLink>
+                        <form @submit.prevent="e => deletePost(e.target.dataset.id)" :data-id="post.id">
+                            <button class="bg-red-600 flex w-full justify-center items-center p-2 text-white text-xs rounded-sm">Supprimer</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -39,10 +42,41 @@
     const posts = ref()
     const success = ref()
 
-    onMounted(() => {
+    /**
+     * Charge la liste des articles
+     * @returns {any}
+     */
+    function loadPosts()
+    {
         axios.get('/api/posts/')
         .then(response => response.data)
         .then(data => posts.value = data.posts)
+    }
+
+
+    /**
+     * Supprime un article et recharge la liste
+     * @param {any} post_id
+     * @returns {any}
+     */
+    function deletePost(post_id)
+    {
+        if (confirm("Confirmer la suppression de l'article ?"))
+        {
+            axios.post('/api/posts/' + post_id, {
+                _method: 'delete'
+            })
+            .then(() => {
+                success.value = "L'article a bien été supprimé"
+    
+                //On recharge les articles
+                loadPosts()
+            })
+        }
+    }
+
+    onMounted(() => {
+        loadPosts()
 
         if (store.state.success)
         {
