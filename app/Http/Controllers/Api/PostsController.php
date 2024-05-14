@@ -51,7 +51,12 @@ class PostsController extends Controller
      */
     public function show(string $id) 
     {
-        return response()->json(['post' => Post::with('category')->find($id)]);
+        $post = Post::with('category')->find($id);
+
+        return response()->json([
+            'post' => $post,
+            'similars' => Post::where('category_id', $post->category->id)->where('id', '!=', $post->id)->limit(3)->get()
+        ]);
     }
     
     /**

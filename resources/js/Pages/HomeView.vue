@@ -5,8 +5,8 @@
             <RouterLink :to="'/post/' + post.id " class="group">
                 <img :src="'/storage/' + post.picture" class="w-[100%] lg:h-72 md:h-64 sm:h-80 object-cover shadow-lg rounded-sm group-hover:shadow-xl ease-in-out duration-300">
                 <div class="py-6">
-                    <div class="text-sm text-indigo-700 font-semibold">{{ post.category.name }}</div>
-                    <div class="font-black mt-1 mb-2 text-3xl text-slate-800 leading-tight group-hover:text-indigo-500 ease-in-out duration-300">{{ post.title }}</div>
+                    <span class="text-sm bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full">{{ post.category.name }}</span>
+                    <div class="font-black my-2 text-3xl text-gray-800 leading-tight group-hover:text-blue-500 ease-in-out duration-300">{{ post.title }}</div>
                     <div class="text-sm text-slate-700">{{ moment(String(post.created_at)).format('LL') }}</div>
                     <p class="mt-4 text-slate-800">{{ formatted_content(post.content) }}</p>
                 </div>
