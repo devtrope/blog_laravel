@@ -1,10 +1,10 @@
 <template>
     <div class="fixed bottom-0 left-0 right-0 bg-emerald-500 text-white p-4 text-sm z-20 transition-transform ease-in-out duration-500" :class="hideSuccess ? 'translate-y-full' : 'translate-y-0'" v-if="success" v-text="success"></div>
-    <div class="lg:flex sm:block items-center justify-between">
-        <h1 class="text-lg font-bold text-slate-800">Administration</h1>
+    <div class="md:flex xs:block items-center justify-between">
+        <h1 class="text-lg font-bold text-slate-800 md:mb-0 xs:mb-4">Administration</h1>
         <RouterLink to="/admin/post/create" class="bg-gray-800 hover:bg-gray-700 shadow-md hover:shadow-sm text-sm font-semibold text-white py-3 rounded-md px-8 ease-in-out duration-300">Nouvel article</RouterLink>
     </div>
-    <div class="bg-slate-50 mt-16 rounded-xl border border-solid border-slate-200 animate-pulse h-screen" v-if="isLoading"></div>
+    <div class="bg-white mt-16 rounded-xl border border-solid border-slate-200 animate-pulse h-screen" v-if="isLoading"></div>
     <div class="bg-slate-50 py-8 mt-16 rounded-xl border border-solid border-slate-200" v-if="!isLoading">
         <table class="table-auto border-collapse w-full text-sm">
             <thead>

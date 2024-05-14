@@ -1,5 +1,5 @@
 <template>
-    <div class="w-7/12 m-auto">
+    <div class="md:w-7/12 xs:11/12 m-auto">
         <h1 class="text-2xl font-bold text-slate-700">Nouvel article</h1>
         <form class="mt-16 flex flex-col gap-8" @submit.prevent="submit" enctype="multipart/form-data">
             <div>
