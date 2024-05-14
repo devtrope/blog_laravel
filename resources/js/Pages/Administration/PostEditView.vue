@@ -74,7 +74,7 @@
         let formData = new FormData()
         formData.append('_method', 'put')
         formData.append('title', post.value.title)
-        formData.append('category', post.value.category)
+        formData.append('category_id', post.value.category_id)
         formData.append('content', content.innerText)
         if (image.value)
             formData.append('picture', image.value)
