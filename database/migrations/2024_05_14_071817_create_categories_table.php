@@ -29,10 +29,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('category');
             if (DB::getDriverName() !== 'sqlite')
+            {
+                $table->string('category');
                 $table->dropForeignIdFor(\App\Models\Category::class);
-
+            }
+            
+            $table->string('category')->default('');
             $table->dropColumn('category_id');
         });
 

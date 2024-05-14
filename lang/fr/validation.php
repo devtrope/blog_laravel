@@ -15,6 +15,13 @@ return [
         ],
         'content' => [
             'required' => "Veuillez renseigner le contenu de l'article"
-        ]
+        ],
+        'email' => [
+            'required' => "Veuillez renseigner votre adresse mail",
+            'email' => "Veuillez renseigner une adresse mail valide"
+        ],
+        'password' => [
+            'required' => "Veuillez renseigner votre mot de passe"
+        ],
     ]
 ];
