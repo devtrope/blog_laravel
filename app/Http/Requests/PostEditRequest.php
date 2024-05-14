@@ -23,7 +23,7 @@ class PostEditRequest extends FormRequest
     {
         return [
             'title' => ['required', 'max:255'],
-            'category' => ['required'],
+            'category_id' => ['required'],
             'picture' => ['max:20000'],
             'content' => ['required']
         ];

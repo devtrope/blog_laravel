@@ -5,7 +5,7 @@ return [
         'title' => [
             'required' => "Veuillez renseigner un titre"
         ],
-        'category' => [
+        'category_id' => [
             'required' => "Veuillez renseigner une catégorie"
         ],
         'picture' => [

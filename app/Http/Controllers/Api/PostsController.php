@@ -19,7 +19,7 @@ class PostsController extends Controller
      */
     public function index() 
     {
-        return response()->json(['posts' => Post::all()]);
+        return response()->json(['posts' => Post::with('category')->get()]);
     }
     
     /**
@@ -51,7 +51,7 @@ class PostsController extends Controller
      */
     public function show(string $id) 
     {
-        return response()->json(['post' => Post::find($id)]);
+        return response()->json(['post' => Post::with('category')->find($id)]);
     }
     
     /**

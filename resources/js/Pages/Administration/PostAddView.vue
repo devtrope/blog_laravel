@@ -10,8 +10,10 @@
                 </div>
                 <div>
                     <label class="font-semibold text-sm block mb-2 text-slate-700">Catégorie</label>
-                    <input type="text" id="title" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-md focus-visible:outline-none focus-visible:border-indigo-400" v-model="form.category" />
-                    <p class="text-sm text-red-500" v-if="errors.category" v-text="errors.category[0]"></p>
+                    <select id="categories" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-md focus-visible:outline-none focus-visible:border-indigo-400 bg-white min-h-[42px]" v-model="form.category">
+                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                    </select>
+                    <p class="text-sm text-red-500" v-if="errors.category_id" v-text="errors.category_id[0]"></p>
                 </div>
             </div>
             <div>
@@ -34,12 +36,13 @@
 <script setup>
     import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
-    import { ref, reactive } from 'vue'
+    import { ref, reactive, onMounted } from 'vue'
 
     const router = useRouter()
     const store = useStore()
     const image = ref()
     const errors = ref({})
+    const categories = ref({})
 
     /**
      * Permet de télécharger une image
@@ -63,7 +66,7 @@
     function submit() {
         let formData = new FormData()
         formData.append('title', form.title)
-        formData.append('category', form.category)
+        formData.append('category_id', form.category)
         formData.append('content', content.innerText)
         if (image.value)
             formData.append('picture', image.value)
@@ -86,4 +89,12 @@
             errors.value = error.response.data.errors
         })
     }
+
+    onMounted(() => {
+        axios.get('/api/categories')
+        .then(response => response.data)
+        .then(data => {
+            categories.value = data.categories
+        })
+    })
 </script>

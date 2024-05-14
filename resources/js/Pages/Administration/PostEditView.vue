@@ -10,8 +10,10 @@
                 </div>
                 <div>
                     <label class="font-semibold text-sm block mb-2 text-slate-700">Catégorie</label>
-                    <input type="text" id="title" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-md focus-visible:outline-none focus-visible:border-indigo-400" v-model="post.category" />
-                    <p class="text-sm text-red-500" v-if="errors.category" v-text="errors.category[0]"></p>
+                    <select id="categories" class="border-slate-200 border-solid border w-full py-2 px-3 rounded text-md focus-visible:outline-none focus-visible:border-indigo-400 bg-white min-h-[42px]" v-model="post.category_id">
+                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                    </select>
+                    <p class="text-sm text-red-500" v-if="errors.category_id" v-text="errors.category_id[0]"></p>
                 </div>
             </div>
             <div>
@@ -44,6 +46,7 @@
     const post = ref({})
     const image = ref()
     const errors = ref({})
+    const categories = ref({})
 
     /**
      * Trigger le champ de type file
@@ -99,5 +102,11 @@
         axios.get('/api/posts/' + route.params.id)
         .then(response => response.data)
         .then(data => post.value = data.post)
+
+        axios.get('/api/categories')
+        .then(response => response.data)
+        .then(data => {
+            categories.value = data.categories
+        })
     })
 </script>

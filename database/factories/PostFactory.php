@@ -32,7 +32,7 @@ class PostFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'content' => nl2br(fake()->paragraphs(30, true)),
-            'category' => fake()->word(),
+            'category_id' => fake()->randomElement(\App\Models\Category::pluck('id')),
             'picture' => 'posts/'.$imageFaker->image(public_path('storage/posts'), 640, 480, false)
         ];
     }
