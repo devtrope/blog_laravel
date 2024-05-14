@@ -1,10 +1,11 @@
 <template>
-    <div class="w-full bg-emerald-500 text-white mb-4 p-4 rounded-md text-sm" v-if="success" v-text="success"></div>
+    <div class="fixed bottom-0 left-0 right-0 bg-emerald-500 text-white p-4 text-sm z-20 transition-transform ease-in-out duration-500" :class="hideSuccess ? 'translate-y-full' : 'translate-y-0'" v-if="success" v-text="success"></div>
     <div class="lg:flex sm:block items-center justify-between">
         <h1 class="text-lg font-bold text-slate-800">Administration</h1>
         <RouterLink to="/admin/post/create" class="bg-gray-800 hover:bg-gray-700 shadow-md hover:shadow-sm text-sm font-semibold text-white py-3 rounded-md px-8 ease-in-out duration-300">Nouvel article</RouterLink>
     </div>
-    <div class="bg-slate-50 py-8 mt-16 rounded-xl border border-solid border-slate-200">
+    <div class="bg-slate-50 mt-16 rounded-xl border border-solid border-slate-200 animate-pulse h-screen" v-if="isLoading"></div>
+    <div class="bg-slate-50 py-8 mt-16 rounded-xl border border-solid border-slate-200" v-if="!isLoading">
         <table class="table-auto border-collapse w-full text-sm">
             <thead>
                 <tr class="text-slate-400">
@@ -44,6 +45,8 @@
     const store = useStore()
     const posts = ref()
     const success = ref()
+    const isLoading = ref(true)
+    const hideSuccess = ref(true)
 
     /**
      * Charge la liste des articles
@@ -53,7 +56,18 @@
     {
         axios.get('/api/posts/')
         .then(response => response.data)
-        .then(data => posts.value = data.posts)
+        .then(data => {
+            posts.value = data.posts
+            
+            setTimeout(() => {
+                isLoading.value = false
+            }, 500)
+
+            hideSuccess.value = false
+            setTimeout(() => {
+                hideSuccess.value = true
+            }, 3000)
+        })
     }
 
 
@@ -66,14 +80,21 @@
     {
         if (confirm("Confirmer la suppression de l'article ?"))
         {
+            isLoading.value = true
+
             axios.post('/api/posts/' + post_id, {
                 _method: 'delete'
             })
-            .then(() => {
-                success.value = "L'article a bien été supprimé"
-    
+            .then(() => {    
                 //On recharge les articles
                 loadPosts()
+
+                success.value = "L'article a bien été supprimé"
+
+                hideSuccess.value = false
+                setTimeout(() => {
+                    hideSuccess.value = true
+                }, 3000)
             })
         }
     }

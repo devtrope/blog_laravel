@@ -8,4 +8,9 @@
     <main class="lg:w-7/12 mx-auto pt-40 py-8 sm:w-11/12 min-h-full">
         <RouterView />
     </main>
+    <footer class="bg-gray-900 py-3">
+        <div class="lg:w-7/12 mx-auto sm:w-11/12 text-white text-xs flex justify-center font-bold">
+            Par Quentin SCHIFFERLE
+        </div>
+    </footer>
 </template>

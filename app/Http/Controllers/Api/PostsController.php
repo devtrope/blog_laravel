@@ -19,7 +19,7 @@ class PostsController extends Controller
      */
     public function index() 
     {
-        return response()->json(['posts' => Post::with('category')->get()]);
+        return response()->json(['posts' => Post::with('category')->orderBy('id', 'DESC')->get()]);
     }
     
     /**

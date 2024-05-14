@@ -1,10 +1,26 @@
 <template>
     <h1 class="text-5xl font-bold text-slate-800">Nos derniers articles</h1>
-    <div class="mt-24 grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 gap-8">
+    <div  class="animate-pulse">
+        <div v-if="isLoading" class="animate-pulse mt-24 grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 gap-8">
+            <div v-for="i in 6">
+                <div class="bg-gray-300 lg:h-72 md:h-64 sm:h-80 rounded-sm"></div>
+                <div class="pt-6">
+                    <div class="bg-gray-300 w-10 h-5 rounded-full"></div>
+                    <div class="my-2 bg-gray-300 rounded-full h-5"></div>
+                    <div class="my-2 bg-gray-300 rounded-full h-5 w-1/2"></div>
+                    <div class="bg-gray-300 w-12 h-5 rounded-full"></div>
+                    <div class="mt-4 bg-gray-300 rounded-full h-5"></div>
+                    <div class="mt-1 bg-gray-300 rounded-full h-5"></div>
+                    <div class="mt-1 bg-gray-300 rounded-full h-5 w-1/2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-if="!isLoading" class="mt-24 grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 gap-8">
         <div v-for="post in posts" :key="post.id">
             <RouterLink :to="'/post/' + post.id " class="group">
                 <img :src="'/storage/' + post.picture" class="w-[100%] lg:h-72 md:h-64 sm:h-80 object-cover shadow-lg rounded-sm group-hover:shadow-xl ease-in-out duration-300">
-                <div class="py-6">
+                <div class="pt-6">
                     <span class="text-sm bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full">{{ post.category.name }}</span>
                     <div class="font-black my-2 text-3xl text-gray-800 leading-tight group-hover:text-blue-500 ease-in-out duration-300">{{ post.title }}</div>
                     <div class="text-sm text-slate-700">{{ moment(String(post.created_at)).format('LL') }}</div>
@@ -21,6 +37,7 @@
     import 'moment/dist/locale/fr'
 
     const posts = ref()
+    const isLoading = ref(true)
 
     /**
      * Fonction permettant de supprimer les sauts de ligne d'un texte donné
@@ -42,6 +59,11 @@
     onMounted(() => {
         axios.get('/api/posts')
         .then(response => response.data)
-        .then(data => posts.value = data.posts)
+        .then(data => {
+            posts.value = data.posts
+            setTimeout(() => {
+                isLoading.value = false
+            }, 500)
+        })
     })
 </script>

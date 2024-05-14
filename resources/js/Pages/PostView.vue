@@ -1,8 +1,9 @@
 <template>
     <div v-if="isLoading" class="animate-pulse">
-        <div class="bg-gray-300 h-6 w-20 rounded-full"></div>
-        <div class="bg-gray-300 h-9 rounded-full mt-4 mb-6"></div>
-        <div class="bg-gray-300 h-9 rounded-full w-1/2"></div>
+        <div class="bg-gray-300 h-5 w-20 rounded-full"></div>
+        <div class="bg-gray-300 h-5 rounded-full mt-4 mb-2"></div>
+        <div class="bg-gray-300 h-5 rounded-full mb-2"></div>
+        <div class="bg-gray-300 h-5 rounded-full mb-6 w-1/2"></div>
         <div class="bg-gray-300 aspect-video rounded-sm mt-12"></div>
     </div>
     <div v-if="!isLoading">
@@ -66,7 +67,10 @@
             post.value = data.post
             category.value = data.post.category
             similars.value = data.similars
-            isLoading.value = false
+
+            setTimeout(() => {
+                isLoading.value = false
+            }, 500)
         })
     }
     
@@ -78,8 +82,5 @@
     watch(() => route.params.id, () => {
         isLoading.value = true
         loadPost()
-
-        //Scroll en haut de page
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     })
 </script>
