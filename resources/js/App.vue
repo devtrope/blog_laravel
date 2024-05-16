@@ -22,16 +22,17 @@
 </template>
 
 <script setup>
-    import { useRouter } from 'vue-router'
     import { useStore } from 'vuex'
 
-    const router = useRouter()
     const store = useStore()
     
     function logout() {
-        const token = localStorage.getItem('token')
-        
         axios.post('/api/logout')
         .then(() => store.commit('clearUserData'))
     }
+
+    //On vérifie si l'utilisateur est connecté au rechargement d'une page
+    const userInfo = localStorage.getItem('user')
+    if (userInfo)
+        store.commit('setUserData', JSON.parse(userInfo))
 </script>
