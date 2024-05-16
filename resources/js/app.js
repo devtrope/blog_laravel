@@ -43,12 +43,16 @@ const store = createStore({
     state() {
         return {
             success: null,
+            error: null,
             user: null
         }
     },
     mutations: {
         successMessage (state, message) {
             state.success = message
+        },
+        errorMessage (state, message) {
+            state.error = message
         },
         setUserData(state, data) {
             state.user = data

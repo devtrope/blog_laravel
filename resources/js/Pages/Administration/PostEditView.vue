@@ -102,6 +102,13 @@
         axios.get('/api/posts/' + route.params.id)
         .then(response => response.data)
         .then(data => post.value = data.post)
+        .catch(error => {
+            if (error.response.data.errors.post)
+            {
+                store.commit('errorMessage', error.response.data.errors.post[0])
+                router.push('/admin')
+            }
+        })
 
         axios.get('/api/categories')
         .then(response => response.data)

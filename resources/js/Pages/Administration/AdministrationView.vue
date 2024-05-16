@@ -1,5 +1,6 @@
 <template>
     <div class="fixed bottom-0 left-0 right-0 bg-emerald-500 text-white p-4 text-sm z-20 transition-transform ease-in-out duration-500" :class="hideSuccess ? 'translate-y-full' : 'translate-y-0'" v-if="success" v-text="success"></div>
+    <div class="fixed bottom-0 left-0 right-0 bg-red-500 text-white p-4 text-sm z-20 transition-transform ease-in-out duration-500" :class="hideError ? 'translate-y-full' : 'translate-y-0'" v-if="error" v-text="error"></div>
     <div class="md:flex xs:block items-center justify-between">
         <h1 class="text-lg font-bold text-slate-800 md:mb-0 xs:mb-4">Administration</h1>
         <RouterLink to="/admin/post/create" class="bg-gray-800 hover:bg-gray-700 shadow-md hover:shadow-sm text-sm font-semibold text-white py-3 rounded-md px-8 ease-in-out duration-300">Nouvel article</RouterLink>
@@ -45,8 +46,10 @@
     const store = useStore()
     const posts = ref()
     const success = ref()
+    const error = ref()
     const isLoading = ref(true)
     const hideSuccess = ref(true)
+    const hideError = ref(true)
 
     /**
      * Charge la liste des articles
@@ -66,6 +69,11 @@
             hideSuccess.value = false
             setTimeout(() => {
                 hideSuccess.value = true
+            }, 3000)
+
+            hideError.value = false
+            setTimeout(() => {
+                hideError.value = true
             }, 3000)
         })
     }
@@ -106,6 +114,12 @@
         {
             success.value = store.state.success
             store.commit('successMessage', null)
+        }
+
+        if (store.state.error)
+        {
+            error.value = store.state.error
+            store.commit('errorMessage', null)
         }
     })
 </script>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\PostEditRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class PostsController extends Controller
 {
@@ -52,6 +53,12 @@ class PostsController extends Controller
     public function show(string $id) 
     {
         $post = Post::with('category')->find($id);
+
+        if (! $post) {
+            throw ValidationException::withMessages([
+                'post' => ['L\'article demandé n\'existe pas'],
+            ]);
+        }
 
         return response()->json([
             'post' => $post,

@@ -1,4 +1,5 @@
 <template>
+    <div class="fixed bottom-0 left-0 right-0 bg-red-500 text-white p-4 text-sm z-20 transition-transform ease-in-out duration-500" :class="hideError ? 'translate-y-full' : 'translate-y-0'" v-if="error" v-text="error"></div>
     <h1 class="text-5xl font-bold text-slate-800">Nos derniers articles</h1>
     <div  class="animate-pulse">
         <div v-if="isLoading" class="animate-pulse mt-24 grid md:grid-cols-2 xs:grid-cols-1 gap-8">
@@ -33,11 +34,15 @@
 
 <script setup>
     import { ref, onMounted } from 'vue'
+    import { useStore } from 'vuex'
     import moment from 'moment'
     import 'moment/dist/locale/fr'
 
+    const store = useStore()
     const posts = ref()
+    const error = ref()
     const isLoading = ref(true)
+    const hideError = ref(true)
 
     /**
      * Fonction permettant de supprimer les sauts de ligne d'un texte donné
@@ -65,5 +70,16 @@
                 isLoading.value = false
             }, 500)
         })
+
+        if (store.state.error)
+        {
+            error.value = store.state.error
+            store.commit('errorMessage', null)
+
+            hideError.value = false
+            setTimeout(() => {
+                hideError.value = true
+            }, 3000)
+        }
     })
 </script>

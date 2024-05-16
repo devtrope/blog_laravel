@@ -31,12 +31,15 @@
 </template>
 
 <script setup>
-    import { RouterLink, useRoute } from 'vue-router'
+    import { RouterLink, useRoute, useRouter } from 'vue-router'
     import { ref, onMounted, watch } from 'vue'
+    import { useStore } from 'vuex'
     import moment from 'moment'
     import 'moment/dist/locale/fr'
 
     const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
     const post = ref({})
     const category = ref({})
     const similars = ref({})
@@ -71,6 +74,13 @@
             setTimeout(() => {
                 isLoading.value = false
             }, 500)
+        })
+        .catch(error => {
+            if (error.response.data.errors.post)
+            {
+                store.commit('errorMessage', error.response.data.errors.post[0])
+                router.push('/')
+            }
         })
     }
     
