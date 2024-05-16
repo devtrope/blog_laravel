@@ -9,7 +9,12 @@ export default {
         fontFamily: {
             'display': ['Inter']
         },
-        extend: {},
+        extend: {
+            screens: {
+                'xs': '400px',
+                '3xl': '1920px'
+            }
+        },
     },
     plugins: [],
 }
