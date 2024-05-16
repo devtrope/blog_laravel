@@ -71,12 +71,6 @@
             }, 500)
         })
 
-        axios.get('/api/posts/list')
-        .then(response => response.data)
-        .then(data => {
-            console.log(data)
-        })
-
         if (store.state.error)
         {
             error.value = store.state.error
