@@ -1,6 +1,6 @@
 <template>
-    <nav class="fixed top-0 left-0 right-0 bg-gray-900 border-b border-solid border-gray-700 z-10">
-        <div class="3xl:w-7/12 xl:w-9/12 md:10/12 xs:w-11/12 mx-auto py-6 flex justify-between items-center">
+    <nav class="fixed top-0 left-0 right-0 bg-gray-900 border-b border-solid border-gray-700 z-10 min-h-[99px]">
+        <div class="3xl:w-7/12 xl:w-9/12 md:10/12 xs:w-11/12 mx-auto py-6 flex justify-between items-center h-[99px]">
             <RouterLink to="/" class="text-2xl font-bold text-white">Blog</RouterLink>
             <div v-if="store.state.user" class="flex gap-4">
                 <RouterLink to="/admin" class="bg-white text-gray-900 text-md font-bold py-3 rounded-md px-8">Administration</RouterLink>
@@ -11,7 +11,7 @@
             </div>
         </div>
     </nav>
-    <main class="3xl:w-7/12 xl:w-9/12 md:10/12 xs:w-11/12 mx-auto pt-40 py-8 min-h-full">
+    <main class="3xl:w-7/12 xl:w-9/12 md:10/12 xs:w-11/12 mx-auto mt-[99px] py-8 min-h-full">
         <RouterView />
     </main>
     <footer class="bg-gray-900 py-3">

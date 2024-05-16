@@ -1,5 +1,5 @@
 <template>
-    <div class="w-1/3 m-auto border border-solid border-slate-300 p-6 rounded-md min-h-[100%]">
+    <div class="w-1/3 m-auto px-8 py-12 mt-32 rounded-md shadow-md min-h-[100%]">
         <h1 class="font-bold text-2xl text-gray-800">Connexion</h1>
         <form @submit.prevent="login()">
             <div class="mt-8">
@@ -14,12 +14,18 @@
             </div>
             <button class="bg-green-500 hover:bg-green-600 shadow-md hover:shadow-sm text-sm font-semibold text-white py-4 rounded-md w-full px-8 ease-in-out duration-300 mt-8">Me connecter</button>
         </form>
-        <div class="bg-red-500 mt-4 text-white p-2 text-xs text-center rounded-md" v-if="errors.user" v-text="errors.user[0]"></div>
+        <div class="bg-red-500 mt-8 text-white p-4 text-xs text-center rounded-sm" v-if="errors.user" v-text="errors.user[0]"></div>
+        <div class="mt-8">
+            <div class="text-center text-sm">
+                <p>Vous n'avez pas encore de compte</p>
+                <RouterLink to="/register" class="text-blue-500 hover:underline">Inscrivez-vous</RouterLink>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
-    import { useRouter } from 'vue-router'
+    import { RouterLink, useRouter } from 'vue-router'
     import { reactive, ref } from 'vue'
     import { useStore } from 'vuex'
 

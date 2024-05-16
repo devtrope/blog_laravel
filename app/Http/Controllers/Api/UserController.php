@@ -29,6 +29,30 @@ class UserController extends Controller
         ]);
     }
 
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'                  => ['required'],
+            'first_name'            => ['required'],
+            'email'                 => ['required', 'email', 'unique:users'],
+            'password'              => ['required', 'confirmed'],
+            'password_confirmation' => ['required'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->first_name.' '.$request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        $token = $user->createToken('blog_token')->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ]);
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

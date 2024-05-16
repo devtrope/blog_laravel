@@ -10,6 +10,6 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-display h-full">
-       <div id="app" class="h-full"></div>
+       <div id="app" class="h-[100%]"></div>
     </body>
 </html>

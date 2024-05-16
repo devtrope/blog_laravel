@@ -8,7 +8,8 @@ import HomeView from './Pages/HomeView.vue'
 import AdministrationView from './Pages/Administration/AdministrationView.vue'
 import PostEditView from './Pages/Administration/PostEditView.vue';
 import PostAddView from './Pages/Administration/PostAddView.vue';
-import LoginView from './Pages/Login/LoginView.vue';
+import LoginView from './Pages/Auth/LoginView.vue';
+import RegisterView from './Pages/Auth/RegisterView.vue';
 import PostView from './Pages/PostView.vue';
 import NotFoundView from './Pages/NotFoundView.vue';
 
@@ -19,6 +20,7 @@ const routes = [
     { path: '/admin/post/create', component: PostAddView, meta: { requiresAuth: true } },
     { path: '/post/:id', component: PostView },
     { path: '/login', component: LoginView },
+    { path: '/register', component: RegisterView },
     { path: '/:pathMatch(.*)', component: NotFoundView },
 ]
 
