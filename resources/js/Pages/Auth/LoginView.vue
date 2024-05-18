@@ -38,10 +38,8 @@
         password: ''
     }))
 
-    async function login() {
-        await axios.get("http://localhost:8000/sanctum/csrf-cookie")
-
-        await axios.post('/api/login', form)
+    function login() {
+        axios.post('/api/login', form)
         .then(response => {
             store.commit('setUserData', response.data)
             router.push('/admin')
